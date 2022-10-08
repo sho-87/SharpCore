@@ -12,7 +12,7 @@ public class ImageHelper
     /// <returns>Loaded image</returns>
     public static Image LoadImage(string directory, string filename)
     {
-        return Image.FromFile(DirectoryHelper.GetPathToLocalFile(directory, filename));
+        return Image.FromFile(FileHelper.GetPathToLocalFile(directory, filename));
     }
 
     /// <summary>

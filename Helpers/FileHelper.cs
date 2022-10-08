@@ -1,6 +1,6 @@
 ﻿namespace SharpCore;
 
-public class DirectoryHelper
+public class FileHelper
 {
     /// <summary>
     /// Get the path to a file in a local directory, relative to the application root
