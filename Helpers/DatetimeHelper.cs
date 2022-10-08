@@ -1,4 +1,4 @@
-﻿namespace SharpCore.Helpers;
+﻿namespace SharpCore;
 
 public class DatetimeHelper
 {

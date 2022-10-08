@@ -1,6 +1,6 @@
 ﻿using Microsoft.Toolkit.Uwp.Notifications;
 
-namespace SharpCore.Helpers
+namespace SharpCore
 {
     public class DialogHelper
     {

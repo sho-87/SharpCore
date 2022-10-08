@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 
-namespace SharpCore.Helpers;
+namespace SharpCore;
 
 public class ImageHelper
 {

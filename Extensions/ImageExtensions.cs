@@ -1,7 +1,7 @@
 ﻿using System.Drawing;
 using System.Drawing.Imaging;
 
-namespace SharpCore.Helpers;
+namespace SharpCore;
 
 public static class ImageExtensions
 {
