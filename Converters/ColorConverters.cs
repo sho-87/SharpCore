@@ -11,6 +11,8 @@ public class ColorToHex : IValueConverter
     /// </summary>
     public object Convert(object value, Type targetType, object parameter, string language)
     {
+        if (value == null) return default(Color);
+
         var c = (Color)value;
         return Windows.UI.Color.FromArgb(c.A, c.R, c.G, c.B);
     }
@@ -20,7 +22,9 @@ public class ColorToHex : IValueConverter
     /// </summary>
     public object ConvertBack(object value, Type targetType, object parameter, string language)
     {
+        if (value == null) return new Color();
+
         var c = (Windows.UI.Color)value;
-        return Color.FromArgb(Int32.Parse(value.ToString().Replace("#", ""), NumberStyles.HexNumber));
+        return Color.FromArgb(Int32.Parse(c.ToString().Replace("#", ""), NumberStyles.HexNumber));
     }
 }
