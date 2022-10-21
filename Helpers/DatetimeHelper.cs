@@ -8,7 +8,7 @@ public class DatetimeHelper
     /// <returns>Unix time in milliseconds</returns>
     public static long GetCurrentUnixTime()
     {
-        DateTimeOffset now = DateTimeOffset.UtcNow;
-        return now.ToUnixTimeMilliseconds();
+        DateTimeOffset Now = DateTimeOffset.UtcNow;
+        return Now.ToUnixTimeMilliseconds();
     }
 }

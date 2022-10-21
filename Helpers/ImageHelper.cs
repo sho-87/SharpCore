@@ -25,10 +25,10 @@ public class ImageHelper
     /// <returns>New Size instance with aspect ratio preserved</returns>
     public static Size CalcSizeMaintainAspect(Size src, int maxWidth, int maxHeight, bool enlarge = false)
     {
-        maxWidth = enlarge ? maxWidth : Math.Min(maxWidth, src.Width);
-        maxHeight = enlarge ? maxHeight : Math.Min(maxHeight, src.Height);
+        int MaxWidth = enlarge ? maxWidth : Math.Min(maxWidth, src.Width);
+        int MaxHeight = enlarge ? maxHeight : Math.Min(maxHeight, src.Height);
 
-        decimal rnd = Math.Min(maxWidth / (decimal)src.Width, maxHeight / (decimal)src.Height);
-        return new Size((int)Math.Round(src.Width * rnd), (int)Math.Round(src.Height * rnd));
+        decimal Rnd = Math.Min(MaxWidth / (decimal)src.Width, MaxHeight / (decimal)src.Height);
+        return new Size((int)Math.Round(src.Width * Rnd), (int)Math.Round(src.Height * Rnd));
     }
 }

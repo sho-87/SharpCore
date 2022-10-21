@@ -13,8 +13,8 @@ public class ColorToHex : IValueConverter
     {
         if (value == null) return default(Color);
 
-        var c = (Color)value;
-        return Windows.UI.Color.FromArgb(c.A, c.R, c.G, c.B);
+        var Color = (Color)value;
+        return Windows.UI.Color.FromArgb(Color.A, Color.R, Color.G, Color.B);
     }
 
     /// <summary>
@@ -24,7 +24,7 @@ public class ColorToHex : IValueConverter
     {
         if (value == null) return new Color();
 
-        var c = (Windows.UI.Color)value;
-        return Color.FromArgb(Int32.Parse(c.ToString().Replace("#", ""), NumberStyles.HexNumber));
+        var Color = (Windows.UI.Color)value;
+        return System.Drawing.Color.FromArgb(int.Parse(Color.ToString().Replace("#", ""), NumberStyles.HexNumber));
     }
 }

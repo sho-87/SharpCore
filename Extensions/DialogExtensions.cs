@@ -13,9 +13,9 @@ public static class DialogExtensions
     public static void AttachWindowToPicker<T>(this T picker, Window window)
     {
         // Get the current window's HWND by passing in the Window object
-        var hwnd = WinRT.Interop.WindowNative.GetWindowHandle(window);
+        IntPtr Hwnd = WinRT.Interop.WindowNative.GetWindowHandle(window);
 
         // Associate the HWND with the file picker
-        WinRT.Interop.InitializeWithWindow.Initialize(picker, hwnd);
+        WinRT.Interop.InitializeWithWindow.Initialize(picker, Hwnd);
     }
 }

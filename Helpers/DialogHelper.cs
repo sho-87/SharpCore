@@ -13,16 +13,16 @@ namespace SharpCore
         /// <param name="expiration">Time, in seconds, after which the notification expires</param>
         public static void ShowToast(string header, string body, Uri? image = null, int expiration = 60)
         {
-            ToastContentBuilder toast = new ToastContentBuilder()
+            ToastContentBuilder Toast = new ToastContentBuilder()
                 .AddText(header)
                 .AddText(body);
 
             if (image != null)
             {
-                toast.AddInlineImage(image);
+                Toast.AddInlineImage(image);
             }
 
-            toast.Show(toast =>
+            Toast.Show(toast =>
             {
                 toast.ExpirationTime = DateTime.Now.AddSeconds(expiration);
             });

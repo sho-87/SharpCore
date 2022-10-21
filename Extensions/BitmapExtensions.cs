@@ -1,6 +1,7 @@
 ﻿using Microsoft.UI.Xaml.Media.Imaging;
 using System.Drawing;
 using System.Drawing.Imaging;
+using Windows.Storage;
 
 namespace SharpCore;
 
@@ -13,76 +14,74 @@ public static class BitmapExtensions
     /// <returns>Converted BitmapImage</returns>
     public static BitmapImage ToBitmapImage(this Bitmap bitmap)
     {
-        // FIXME: The application called an interface that was marshalled for a different thread. 
-        BitmapImage bitmapImage = new BitmapImage();
-        using (MemoryStream stream = new MemoryStream())
+        BitmapImage Image = new();
+        using (MemoryStream Stream = new())
         {
-            bitmap.Save(stream, System.Drawing.Imaging.ImageFormat.Png);
-            stream.Position = 0;
-            bitmapImage.SetSource(stream.AsRandomAccessStream());
+            bitmap.Save(Stream, ImageFormat.Png);
+            Stream.Position = 0;
+            Image.SetSource(Stream.AsRandomAccessStream());
         }
-        return bitmapImage;
+        return Image;
     }
 
     /// <summary>
     /// Resize a bitmap
     /// </summary>
     /// <param name="source">Bitmap to be resized</param>
-    /// <param name="new_width">Desired width</param>
-    /// <param name="new_height">Desired height</param>
+    /// <param name="targetWidth">Desired width</param>
+    /// <param name="targetHeight">Desired height</param>
     /// <returns>Resized bitmap</returns>
-    public static Bitmap Resize(this Bitmap source, int new_width, int new_height)
+    public static Bitmap Resize(this Bitmap source, int targetWidth, int targetHeight)
     {
-        float w_scale = (float)new_width / source.Width;
-        float h_scale = (float)new_height / source.Height;
+        var ScaleW = (float)targetWidth / source.Width;
+        var ScaleH = (float)targetHeight / source.Height;
+        float MinScale = Math.Min(ScaleW, ScaleH);
 
-        float min_scale = Math.Min(w_scale, h_scale);
+        var NewWidth = (int)(source.Width * MinScale);
+        var NewHeight = (int)(source.Height * MinScale);
 
-        var nw = (int)(source.Width * min_scale);
-        var nh = (int)(source.Height * min_scale);
+        int PadW = (targetWidth - NewWidth) / 2;
+        int PadH = (targetHeight - NewHeight) / 2;
 
-        var pad_dims_w = (new_width - nw) / 2;
-        var pad_dims_h = (new_height - nh) / 2;
+        Bitmap NewBitmap = new(targetWidth, targetHeight, PixelFormat.Format24bppRgb);
 
-        var new_bitmap = new Bitmap(new_width, new_height, PixelFormat.Format24bppRgb);
-
-        using (var g = Graphics.FromImage(new_bitmap))
+        using (Graphics Composite = Graphics.FromImage(NewBitmap))
         {
-            g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighSpeed;
-            g.CompositingMode = System.Drawing.Drawing2D.CompositingMode.SourceCopy;
-            g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.Low;
-            g.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighSpeed;
+            Composite.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighSpeed;
+            Composite.CompositingMode = System.Drawing.Drawing2D.CompositingMode.SourceCopy;
+            Composite.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.Low;
+            Composite.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighSpeed;
 
-            g.DrawImage(source, new Rectangle(pad_dims_w, pad_dims_h, nw, nh),
+            Composite.DrawImage(source, new Rectangle(PadW, PadH, NewWidth, NewHeight),
                 0, 0, source.Width, source.Height, GraphicsUnit.Pixel);
         }
 
-        return new_bitmap;
+        return NewBitmap;
     }
 
     /// <summary>
     /// Resize a bitmap without edge padding
     /// </summary>
     /// <param name="source">Bitmap to be resized</param>
-    /// <param name="new_width">Desired width</param>
-    /// <param name="new_height">Desired height</param>
+    /// <param name="targetWidth">Desired width</param>
+    /// <param name="targetHeight">Desired height</param>
     /// <returns>Resized bitmap</returns>
-    public static Bitmap ResizeWithoutPadding(this Bitmap source, int new_width, int new_height)
+    public static Bitmap ResizeWithoutPadding(this Bitmap source, int targetWidth, int targetHeight)
     {
-        var new_bitmap = new Bitmap(new_width, new_height, PixelFormat.Format24bppRgb);
+        Bitmap NewBitmap = new(targetWidth, targetHeight, PixelFormat.Format24bppRgb);
 
-        using (var g = Graphics.FromImage(new_bitmap))
+        using (Graphics Composite = Graphics.FromImage(NewBitmap))
         {
-            g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighSpeed;
-            g.CompositingMode = System.Drawing.Drawing2D.CompositingMode.SourceCopy;
-            g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.Low;
-            g.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighSpeed;
+            Composite.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighSpeed;
+            Composite.CompositingMode = System.Drawing.Drawing2D.CompositingMode.SourceCopy;
+            Composite.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.Low;
+            Composite.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighSpeed;
 
-            g.DrawImage(source, new Rectangle(0, 0, new_width, new_height),
+            Composite.DrawImage(source, new Rectangle(0, 0, targetWidth, targetHeight),
                 0, 0, source.Width, source.Height, GraphicsUnit.Pixel);
         }
 
-        return new_bitmap;
+        return NewBitmap;
     }
 
     /// <summary>
@@ -105,10 +104,10 @@ public static class BitmapExtensions
     /// <param name="suffix">Suffix for the filename</param>
     public static void SaveToMyPictures(this Bitmap image, string suffix)
     {
-        var root = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
-        var filename = string.Format("{0}_{1}.png", DateTime.Now.ToString("yyyy-MM-dd_hh-mm-ss"), suffix);
-        var filePath = Path.Combine(root, filename);
+        string Root = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
+        string Filename = string.Format("{0}_{1}.png", DateTime.Now.ToString("yyyy-MM-dd_hh-mm-ss"), suffix);
+        string FilePath = Path.Combine(Root, Filename);
 
-        image.Save(filePath);
+        image.Save(FilePath);
     }
 }

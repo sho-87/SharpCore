@@ -13,17 +13,18 @@ public static class FileExtensions
     /// <returns>Thumbnail icon for the file</returns>
     public static async Task<StorageItemThumbnail> GetFileIcon(this StorageFile file, uint size = 32)
     {
-        StorageItemThumbnail iconTmb;
-        var imgType = new[] { "bmp", "gif", "jpeg", "jpg", "png" }.FirstOrDefault(ext => file.Path.ToLower().EndsWith(ext));
-        if (imgType != null)
+        StorageItemThumbnail IconTmb;
+        var ImgType = new[] { "bmp", "gif", "jpeg", "jpg", "png" }.FirstOrDefault(Ext => file.Path.ToLower().EndsWith(Ext));
+
+        if (ImgType != null)
         {
-            var dummy = await ApplicationData.Current.TemporaryFolder.CreateFileAsync("dummy." + imgType, CreationCollisionOption.ReplaceExisting); //may overwrite existing
-            iconTmb = await dummy.GetThumbnailAsync(ThumbnailMode.SingleItem, size);
+            StorageFile Dummy = await ApplicationData.Current.TemporaryFolder.CreateFileAsync("dummy." + ImgType, CreationCollisionOption.ReplaceExisting); //may overwrite existing
+            IconTmb = await Dummy.GetThumbnailAsync(ThumbnailMode.SingleItem, size);
         }
         else
         {
-            iconTmb = await file.GetThumbnailAsync(ThumbnailMode.SingleItem, size);
+            IconTmb = await file.GetThumbnailAsync(ThumbnailMode.SingleItem, size);
         }
-        return iconTmb;
+        return IconTmb;
     }
 }
