@@ -1,4 +1,6 @@
-﻿using System.Drawing;
+﻿using Microsoft.UI.Windowing;
+using System.Drawing;
+using System.Drawing.Imaging;
 
 namespace SharpCore;
 
@@ -30,5 +32,22 @@ public class ImageHelper
 
         decimal Rnd = Math.Min(MaxWidth / (decimal)src.Width, MaxHeight / (decimal)src.Height);
         return new Size((int)Math.Round(src.Width * Rnd), (int)Math.Round(src.Height * Rnd));
+    }
+
+    /// <summary>
+    /// Take a screenshot of the primary display
+    /// </summary>
+    /// <returns>Bitmap screenshot</returns>
+    public static Bitmap TakeScreenshot()
+    {
+        Bitmap Bmp = new(DisplayArea.Primary.OuterBounds.Width, DisplayArea.Primary.OuterBounds.Height,
+            PixelFormat.Format32bppArgb);
+
+        using Graphics Composite = Graphics.FromImage(Bmp);
+        Composite.CopyFromScreen(0, 0, 0, 0,
+            new Size(DisplayArea.Primary.OuterBounds.Width, DisplayArea.Primary.OuterBounds.Height),
+            CopyPixelOperation.SourceCopy);
+
+        return Bmp;
     }
 }
