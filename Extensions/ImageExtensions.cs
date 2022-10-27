@@ -13,7 +13,7 @@ public static class ImageExtensions
     /// <param name="overlayScale">Scale of the top image</param>
     /// <param name="darken">Whether the resulting image should be darkened</param>
     /// <returns>Base image with the overlay image on top</returns>
-    public static Image AddOverlayImage(this Image baseImage, Image overlayImage, double overlayScale = 1.0, bool darken = false)
+    public static Image AddOverlayImage(this Image baseImage, Image overlayImage, double overlayScale = 0.5, bool darken = false)
     {
         Bitmap OverlayImage = new(overlayImage, (int)(overlayImage.Width * overlayScale), (int)(overlayImage.Height * overlayScale));
 
