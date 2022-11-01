@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net6.0-windows10.0.19041.0</TargetFramework>
@@ -8,6 +8,7 @@
     <PackageProjectUrl>https://github.com/sho-87/SharpCore</PackageProjectUrl>
     <RepositoryUrl>https://github.com/sho-87/SharpCore</RepositoryUrl>
     <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
 
   <ItemGroup>
