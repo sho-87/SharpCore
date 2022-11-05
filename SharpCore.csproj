@@ -9,6 +9,7 @@
     <RepositoryUrl>https://github.com/sho-87/SharpCore</RepositoryUrl>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PlatformTarget>AnyCPU</PlatformTarget>
+    <Platforms>AnyCPU;x64;x86</Platforms>
   </PropertyGroup>
 
   <ItemGroup>
