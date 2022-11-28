@@ -1,10 +1,21 @@
-﻿using System.Drawing;
+﻿using Microsoft.UI.Xaml.Media.Imaging;
+using System.Drawing;
 using System.Drawing.Imaging;
 
 namespace SharpCore;
 
 public static class ImageExtensions
 {
+    /// <summary>
+    /// Convert Image to a Bitmap
+    /// </summary>
+    /// <param name="img">Image to be converted</param>
+    /// <returns>Converted bitmap</returns>
+    public static Bitmap ToBitmap(this Image img)
+    {
+        return new Bitmap(img);
+    }
+
     /// <summary>
     /// Overlay one image ontop of another
     /// </summary>
