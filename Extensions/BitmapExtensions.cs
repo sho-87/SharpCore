@@ -1,7 +1,6 @@
 ﻿using Microsoft.UI.Xaml.Media.Imaging;
 using System.Drawing;
 using System.Drawing.Imaging;
-using Windows.Storage;
 
 namespace SharpCore;
 
